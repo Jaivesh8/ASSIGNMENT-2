@@ -1,46 +1,44 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 int main() {
-    int n,r,c;
-    cout << "Enter size of matrix: ";
-    cin >> n;
-    cout<<"enter no of rows";
-    cin>>r;
-    cout<<"enter no of cols";
-    cin>>c;
-    vector<vector<int>> triplet;
-    vector<vector<int>> Transpose_triplet;
-    int arr[r][c];
-    cout << "Enter elements: ";
-    for (int i = 0; i < r; i++) {
-        for (int j = 0; j < c; j++)
-        {
-           cin>> arr[i][j]; 
-        }
-        cout<<endl;
-          
+    int m, n, t;
+    cout << "Enter number of rows, cols and non-zero elements";
+    cin >> m >> n >> t;
+
+    int triplet[100][3];     
+    int transpose[100][3];   
+
+    triplet[0][0] = m;
+    triplet[0][1] = n;
+    triplet[0][2] = t;
+
+    cout << "Enter triplet (row col val) non-zero element\n";
+    for (int i = 1; i <= t; i++) {
+        cin >> triplet[i][0] >> triplet[i][1] >> triplet[i][2];
     }
-    for (int i = 0; i < r; i++) {
-        for (int j = 0; j < c; j++)
-        {
-           if(arr[i][j]!=0){
-            triplet.push_back({i,j,arr[i][j]});
-            Transpose_triplet.push_back({j,i,arr[i][j]});
-           }
+
+    transpose[0][0] = n; 
+    transpose[0][1] = m;  
+    transpose[0][2] = t;
+
+    int k = 1;
+    for (int col = 0; col < n; col++) {
+        for (int i = 1; i <= t; i++) {
+            if (triplet[i][1] == col) {
+                transpose[k][0] = triplet[i][1]; 
+                transpose[k][1] = triplet[i][0]; 
+                transpose[k][2] = triplet[i][2];
+                k++;
+            }
         }
-        cout<<endl;
-          
     }
-    
-    
-    
-   for (auto &t:triplet){
-    cout<<t[0]<<" "<<t[1]<<" "<<t[2]<<endl;
-   }
-   for (auto &t:Transpose_triplet){
-    cout<<t[0]<<" "<<t[1]<<" "<<t[2]<<endl;
-   }
-   
+
+    cout << "Transpose Triplet\n";
+    for (int i = 0; i <= t; i++) {
+        cout << transpose[i][0] << " " 
+             << transpose[i][1] << " " 
+             << transpose[i][2] << "\n";
+    }
     return 0;
 }
