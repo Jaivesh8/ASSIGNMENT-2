@@ -1,57 +1,69 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 int main() {
-    int r1, c1, r2, c2;
-    cout << "Enter rows and cols of Matrix 1: ";
-    cin >> r1 >> c1;
-    int arr1[r1][c1];
-    vector<vector<int>> triplet1;
-    
-    cout << "Enter elements of Matrix 1:\n";
-    for (int i = 0; i < r1; i++)
-        for (int j = 0; j < c1; j++) {
-            cin >> arr1[i][j];
-            if (arr1[i][j] != 0) triplet1.push_back({i, j, arr1[i][j]});
-        }
-
-    cout << "Enter rows and cols of Matrix 2: ";
-    cin >> r2 >> c2;
-    int arr2[r2][c2];
-    vector<vector<int>> triplet2;
-    
-    cout << "Enter elements of Matrix 2:\n";
-    for (int i = 0; i < r2; i++)
-        for (int j = 0; j < c2; j++) {
-            cin >> arr2[i][j];
-            if (arr2[i][j] != 0) triplet2.push_back({i, j, arr2[i][j]});
-        }
-
-    if (c1 != r2) {
-        cout << "Multiplication not possible!\n";
+    int m, n, p, q; 
+    cout<<"enter no of rows and cols" ; 
+    cin >> m >> n;    
+    int A[100][3];
+    cout<<"enter no of nonzeros in A";
+    cin >> A[0][2];   
+    A[0][0] = m; A[0][1] = n;
+    cout<<"enter (rows cols val) for A";
+    for (int i = 1; i <= A[0][2]; i++) {
+        cin >> A[i][0] >> A[i][1] >> A[i][2]; 
+    }
+    cout<<"enter no of rows and cols for B" ;
+    cin >> p >> q;    
+    int B[100][3];
+    cout<<"enter no of nonzeros in B";
+    cin >> B[0][2];
+    B[0][0] = p; B[0][1] = q;
+    cout<<"enter (rows cols val) for B";
+    for (int i = 1; i <= B[0][2]; i++) {
+        cin >> B[i][0] >> B[i][1] >> B[i][2]; 
+    }
+    if (n != p) {
+        cout << "Multiplication not possible\n";
         return 0;
     }
+    int C[100][3];
+    C[0][0] = m; 
+    C[0][1] = q;
+    int ccount = 0;
+    for (int i = 1; i <= A[0][2]; i++) {
+        for (int j = 1; j <= B[0][2]; j++) {
+            if (A[i][1] == B[j][0]) {   
+                int row = A[i][0];
+                int col = B[j][1];
+                int val = A[i][2] * B[j][2];
 
-    
-    map<pair<int,int>, int> resultMap;
-    for (auto &a : triplet1) {
-        for (auto &b : triplet2) {
-            if (a[1] == b[0]) { 
-                resultMap[{a[0], b[1]}] += a[2] * b[2];
+                int found = 0;
+                for (int k = 1; k <= ccount; k++) {
+                    if (C[k][0] == row && C[k][1] == col) {
+                        C[k][2] += val;
+                        found = 1;
+                        break;
+                    }
+                }
+
+                
+                if (!found && val != 0) {
+                    ccount++;
+                    C[ccount][0] = row;
+                    C[ccount][1] = col;
+                    C[ccount][2] = val;
+                }
             }
         }
     }
-
-    // Convert map to triplet
-    vector<vector<int>> triplet3;
-    for (auto &entry : resultMap) {
-        if (entry.second != 0)
-            triplet3.push_back({entry.first.first, entry.first.second, entry.second});
+    C[0][2] = ccount;
+    cout << "Resultant matrix in 3-tuple form:\n";
+    for (int i = 0; i <= ccount; i++) {
+        cout << C[i][0] << " " << C[i][1] << " " << C[i][2] << "\n";
     }
-
-    cout << "Result";
-    for (auto &t : triplet3)
-        cout << t[0] << " " << t[1] << " " << t[2] << endl;
 
     return 0;
 }
+
+
