@@ -1,32 +1,19 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
 using namespace std;
 
 int main() {
-    string s;
+    string str, result="";
     cout << "Enter a string: ";
-    getline(cin,s);
-    string res="aeiouAEIOU";
-    
-    for (int i = 0; i < s.length(); i++)
-    {
-        for (int j = 0; j < res.length(); j++)
-        {
-            if(s[i]==res[j]){
-                for (int k = 0; k+i+1 < s.length(); k++)
-                {
-                    s[i+k]=s[i+1+k];
-                }
-                s.pop_back();
-                i--;
-                
-                
-               
-            }
-        }
-        
+    getline(cin, str);
 
+    for (char c : str) {
+        if (!(c == 'a'|| c == 'e'|| c == 'i'|| c == 'o' || c == 'u'||
+              c == 'A'|| c == 'E'|| c == 'I' || c == 'O'|| c == 'U')) {
+            result =result+ c;
+        }
     }
-    cout<<"new string is "<<s;
-    
+
+    cout << "String after removing vowels: " << result << endl;
     return 0;
 }
