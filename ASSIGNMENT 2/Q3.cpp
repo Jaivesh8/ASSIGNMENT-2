@@ -1,42 +1,27 @@
-#include<bits/stdc++.h>
+#include <iostream>
 using namespace std;
-int main(){
+
+int main() {
     int n;
-    cout<<"enter size of array";
-    cin>>n;
-    vector<int> arr(n);
-    cout<<"enter array values";
-    for (int i = 0; i <n; i++)
-    {
-        cin>>arr[i];
-    }
+    cout << "Enter size of array: ";
+    cin >> n;
+    int arr[n];
+    cout << "Enter array elements (sorted) ";
     for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n-1-i; j++)
-        {
-            if(arr[j+1]<arr[j])
-           swap(arr[j+1],arr[j]);
+        cin >> arr[i];
+
+    int missing = -1;
+    for (int i = 0; i < n - 1; i++) {
+        if (arr[i + 1] != arr[i] + 1) {
+            missing = arr[i] + 1;
+            break;
         }
-        
     }
-    int missing;
-    for (int i = 0; i < n-1; i++)
-    {
-        if(arr[i+1]-arr[i]>1){
-            for ( int j = 1; j <arr[i+1]-arr[i] ; j++)
-            {
-                missing=arr[i]+j;
-                cout<<missing;
-            }
-            
-          
-        }
-        if(arr[i+1]-arr[i]==0){
-           
-        }
-        
-    }
-    
-    
+
+    if (missing != -1)
+        cout << "Missing number is: " << missing << endl;
+    else
+        cout << "No missing number found" << endl;
+
     return 0;
 }
